@@ -1,0 +1,44 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint",
+        "import"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended"
+    ],
+    "rules": {
+        "@typescript-eslint/ban-types": ["off"],
+        "@typescript-eslint/no-unused-vars": ["off"],
+        "prettier/prettier": [
+            "error", {
+                "singleQuote": true,
+                "trailingComma": "all",
+                "useTabs": true,
+                "semi": true,
+                "bracketSpacing": true,
+                "printWidth": 100,
+                "endOfLine": "auto"
+            }
+        ],
+        "import/order": [
+            "error",
+            {
+                "newlines-between": "always",
+                "groups": ["builtin", "external", "parent", "sibling", "index"],
+                "pathGroups": [
+                    {
+                        "pattern": "src/**",
+                        "group": "parent",
+                        "position": "after"
+                    }
+                ]
+            }
+        ],
+        "import/newline-after-import": "error"
+    }
+}

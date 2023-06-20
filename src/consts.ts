@@ -1,0 +1,14 @@
+export const HASH_SALT = 'HASH_SALT';
+
+export const AWS_ACCESS_KEY = 'AWS_ACCESS_KEY';
+export const AWS_SECRET_ACCESS_KEY = 'AWS_SECRET_ACCESS_KEY';
+
+export const AWS_REGION = 'AWS_REGION';
+export const AWS_API_VERSION = 'AWS_API_VERSION';
+
+export const AWS_BUCKET_NAME = 'AWS_BUCKET_NAME';
+
+export const AWS_DYNAMO_DB_TABLE_NAME = 'AWS_DYNAMO_DB_TABLE_NAME';
+
+export const AWS_SQS_QUEUE_URL = 'AWS_SQS_QUEUE_URL';
+export const AWS_SQS_QUEUE_NAME = 'AWS_SQS_QUEUE_NAME';
