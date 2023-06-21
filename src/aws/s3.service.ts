@@ -1,16 +1,7 @@
-import {
-	CreateBucketCommand,
-	CreateBucketCommandOutput,
-	GetObjectCommand,
-	HeadBucketCommand,
-	HeadBucketCommandOutput,
-	ListBucketsCommand,
-	ListBucketsCommandOutput,
-	PutObjectCommand,
-	S3Client,
-} from '@aws-sdk/client-s3';
+import path from 'path';
+
+import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
-import sharp from 'sharp';
 
 import {
 	AWS_ACCESS_KEY,
@@ -41,6 +32,7 @@ export class S3Service {
 		try {
 			const object = await this.s3Client.send(command);
 			if (object) {
+				console.log(successfulRequest('get object'));
 				return object;
 			}
 			console.log(`Object by key ${key} not found`);
@@ -51,20 +43,26 @@ export class S3Service {
 		}
 	}
 
-	public async putFile(file: Buffer): Promise<string | undefined> {
-		const key = uuidv4();
+	public async putFile(file: Buffer, originalFileKey: string): Promise<string | undefined> {
+		const processedFileKey = this.getKeyWithFileExtension(originalFileKey);
 		const putObjectCommand = new PutObjectCommand({
 			Bucket: this.bucketName,
 			Body: file,
-			Key: key,
+			Key: processedFileKey,
 			ACL: 'public-read-write',
 		});
 		try {
 			await this.s3Client.send(putObjectCommand);
-			return key;
+			return processedFileKey;
 		} catch (e) {
 			return undefined;
 		}
+	}
+
+	private getKeyWithFileExtension(fileName: string): string {
+		const key = uuidv4();
+		const fileExt = path.extname(fileName);
+		return key + fileExt;
 	}
 
 	private configureS3Client(): S3Client {

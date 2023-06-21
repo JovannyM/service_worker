@@ -36,7 +36,7 @@ async function Run() {
 			}
 			const buffer = await originalFIleObject.Body.transformToByteArray();
 			const processedObject = await sharp(buffer.buffer).rotate(180).withMetadata().toBuffer();
-			const processedObjectKey = await s3Service.putFile(processedObject);
+			const processedObjectKey = await s3Service.putFile(processedObject, item.OriginalFileKey);
 			await dynamoDBService.updateItem(TaskID, 'Done', processedObjectKey);
 			console.log('Done. Wait for new messages');
 		}
